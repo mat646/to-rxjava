@@ -33,7 +33,6 @@ public class PhotoCrawler {
         for (String searchQuery : queries) {
             photoObservables.add(photoDownloader
                     .searchForPhotos(searchQuery)
-                    //.onErrorReturn(new Photo())
                     .subscribeOn(Schedulers.io()));
         }
 

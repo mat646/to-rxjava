@@ -1,7 +1,6 @@
 package util;
 
 import model.Photo;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

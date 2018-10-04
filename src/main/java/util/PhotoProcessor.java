@@ -2,7 +2,6 @@ package util;
 
 import model.Photo;
 import model.PhotoSize;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;

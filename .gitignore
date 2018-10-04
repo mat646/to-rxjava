@@ -1,6 +1,6 @@
 .gradle/
 gradle/
-\.idea/
+.idea/
 .settings
 *.class
 .classpath

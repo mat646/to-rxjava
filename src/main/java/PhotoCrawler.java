@@ -7,13 +7,9 @@ import util.PhotoSerializer;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import io.reactivex.Observable;
 
 public class PhotoCrawler {
-
-    private static final Logger log = Logger.getLogger(PhotoCrawler.class.getName());
 
     private final PhotoDownloader photoDownloader;
 
@@ -35,27 +31,13 @@ public class PhotoCrawler {
         List<Observable<Photo>> photoObservables = new ArrayList<>();
 
         for (String searchQuery : queries) {
-            photoObservables.add(photoDownloader.searchForPhotos(searchQuery));
+            photoObservables.add(photoDownloader
+                    .searchForPhotos(searchQuery)
+                    //.onErrorReturn(new Photo())
+                    .subscribeOn(Schedulers.io()));
         }
 
         Observable.merge(photoObservables)
-                .compose(this::processPhotos)
-                .subscribe(photos -> photos.forEach(photoSerializer::savePhoto));
-    }
-
-    public void downloadPhotoExamples() {
-        try {
-            Observable<Photo> downloadedExamples = photoDownloader.getPhotoExamples().map(photoDownloader::getPhoto);
-            downloadedExamples
-                    .compose(this::processPhotos)
-                    .subscribe(photos -> photos.forEach(photoSerializer::savePhoto));
-        } catch (IOException e) {
-            log.log(Level.SEVERE, "Downloading photo examples error", e);
-        }
-    }
-
-    public void downloadPhotosForQuery(String query) {
-        photoDownloader.searchForPhotos(query)
                 .compose(this::processPhotos)
                 .subscribe(photos -> photos.forEach(photoSerializer::savePhoto));
     }

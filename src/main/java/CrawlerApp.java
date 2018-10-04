@@ -9,8 +9,6 @@ public class CrawlerApp  {
     public static void main(String[] args) throws IOException, InterruptedException {
         PhotoCrawler photoCrawler = new PhotoCrawler();
         photoCrawler.resetLibrary();
-        //photoCrawler.downloadPhotoExamples();
-        //photoCrawler.downloadPhotosForQuery(TOPICS.get(0));
         photoCrawler.downloadPhotosForMultipleQueries(TOPICS);
 
         Thread.sleep(100_000);

@@ -3,7 +3,6 @@ package model;
 import java.time.LocalDate;
 import java.util.UUID;
 
-
 public class Photo {
 
     private final UUID id = UUID.randomUUID();
